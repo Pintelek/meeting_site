@@ -25,7 +25,7 @@ function SearchStatus({data}) {
 }
 
 SearchStatus.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.array.isRequired
 };
 
 export default SearchStatus;

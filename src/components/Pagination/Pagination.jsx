@@ -12,7 +12,7 @@ function MyPagination({countItem, currentPage, pageSize, onChange}) {
 
   return ( 
     <>
-      <Pagination>
+      <Pagination className='justify-content-end'>
         {arrayPagination.map(page => (
           <Pagination.Item onClick={() => onChange(page)} className={page===currentPage? 'active': ''} key={'page' + page}>{page}</Pagination.Item>
         ))}
