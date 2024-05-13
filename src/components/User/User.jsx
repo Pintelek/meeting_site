@@ -4,7 +4,7 @@ import Qualities from '../Qualitie/Qualities';
 import PropTypes from 'prop-types';
 
 
-function User({_id, name,qualities, profession, completedMeetings, onToggleBookmark, rate, onDelete, bookmark}) {
+function User({_id, name ,qualities , profession, completedMeetings, onToggleBookmark, rate, onDelete, bookmark}) {
 
   
 
