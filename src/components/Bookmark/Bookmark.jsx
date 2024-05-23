@@ -1,4 +1,4 @@
-
+import PropTypes from 'prop-types';
 
 function Bookmark({status, onClick, id}) {
 
@@ -9,5 +9,11 @@ function Bookmark({status, onClick, id}) {
     </div>
   );
 }
+
+Bookmark.propTypes = {
+  status: PropTypes.bool,
+  onClick: PropTypes.func,
+  id: PropTypes.string.isRequired
+};
 
 export default Bookmark;

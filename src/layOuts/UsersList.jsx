@@ -1,13 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import API from '../../API';
+import API from '../API';
 import { useEffect, useState } from 'react';
-import SearchStatus from '../SearchStatus/SearchStatus';
-import MyPagination from '../Pagination/Pagination';
-import paginate from '../../utils/paginate';
-import GroupList from '../GroupList/GroupList';
+import SearchStatus from '../components/SearchStatus/SearchStatus';
+import MyPagination from '../components/Pagination/Pagination';
+import paginate from '../utils/paginate';
+import GroupList from '../components/GroupList/GroupList';
 import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box';
-import UserTable from '../UserTable/UserTable';
+import UserTable from '../components/UserTable/UserTable';
 import _ from 'lodash';
 
 
@@ -19,7 +19,7 @@ function UsersList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [professions , setProfessions] = useState();
   const [selectedProfession, setSelectedProfession] = useState();
-  const [sortBy, setSortBy] = useState({iter:'name', order: 'asc'});
+  const [sortBy, setSortBy] = useState({path:'name', order: 'asc'});
 
   const pageSize = 8;
   const countUsers = filterUser.length;

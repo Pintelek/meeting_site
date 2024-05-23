@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import Qualities from '../Qualitie/Qualities';
+
+import PropTypes from 'prop-types';
 
 function BodyTable({columns, data}) {
 
@@ -22,9 +23,8 @@ function BodyTable({columns, data}) {
         {data.map(item => ( 
           <tr key={item._id}>
             {Object.keys(columns).map(column => (
-              <td key={column}>{Array.isArray(item[column])? item[column].map(el => (
-                <Qualities key={el._id} {...el} />
-              )) : renderComponent(column,item)}</td>
+              <td key={column}> {
+                renderComponent(column,item)}</td>
             ))}
           </tr> ))}
         
@@ -32,5 +32,10 @@ function BodyTable({columns, data}) {
     </> 
   );
 }
+
+BodyTable.propTypes = {
+  columns: PropTypes.object.isRequired,
+  data: PropTypes.array.isRequired
+};
 
 export default BodyTable;

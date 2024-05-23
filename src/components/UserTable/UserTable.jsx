@@ -1,36 +1,37 @@
 import BodyTable from '../BodyTable/BodyTable';
 import Bookmark from '../Bookmark/Bookmark';
 import HeaderTable from '../HeaderTable/HeaderTable';
-// import User from '../User/User';
 import PropTypes from 'prop-types';
 
-function UserTable({users, onDelete,onToggleBookmark, currentSort, onSortItem}) {
+import QualitiesList from '../QualitiesList/QualitiesList';
+import Table from '../Table/Table';
+import UserLink from '../UserLink';
+
+function UserTable({users, onDelete, onToggleBookmark, currentSort, onSortItem}) {
 
   const columns = {
-    name: { path: 'name', name: 'Имя' },
-    qualities: {name: 'Качества'},
+    name: { path: 'name', name: 'Имя' , component : (user) => (<UserLink user={user}/>)},
+    qualities: {name: 'Качества' , component : (users) => {
+      return <QualitiesList qualities = {users.qualities}/>;
+    }
+    },
     professions: { path: 'profession.name', name: 'Профессия' },
     completedMeetings: {path: 'completedMeetings',name: 'Встретился, раз'},
     rate: { path: 'rate', name: 'Оценка' },
-    bookmark: {path: 'bookmark',name: 'Избранное', component: (item) => (
-      <Bookmark status={item.bookmark} id={item._id} onClick={onToggleBookmark}/>
+    bookmark: {path: 'bookmark',name: 'Избранное', component: (users) => (
+      <Bookmark status={users.bookmark} id={users._id} onClick={onToggleBookmark}/>
     )},
-    delete: {component: (item) => (
-      <button type="button" onClick={() => {onDelete(item._id);}} className="btn btn-danger">Delete</button>
+    delete: {component: (users) => (
+      <button type="button" onClick={() => {onDelete(users._id);}} className="btn btn-danger">Delete</button>
     )}
   };
 
   return ( 
     <>
-      <table className="table">
+      <Table>
         <HeaderTable {...{currentSort, onSortItem, columns}} />
         <BodyTable {...{columns, data: users}}/>
-        {/* <tbody>
-          {users.map(elem => (
-            <User key={elem._id}  onToggleBookmark={onToggleBookmark} {...elem} onDelete={onDelete}/>
-          ))}
-        </tbody> */}
-      </table>
+      </Table>
     </>
   );
 }
