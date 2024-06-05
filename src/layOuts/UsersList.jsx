@@ -78,19 +78,20 @@ function UsersList() {
 
   return (
     <div className='container'>
-      <SearchStatus data={filterUser}/>
-
       {
         usersAll.length === 0? (
           <Box sx={{ width: '100%' }}>
             <LinearProgress />
-          </Box>): (
+          </Box>): (<>
+          <SearchStatus data={filterUser}/>
           <main className='row m-4'>
             {professions? <GroupList onReset={handlerReset} onSelected={handlerSelectProfession} selectedItem={selectedProfession} items={professions} />: null}
             <div className={'user-list ' + (professions? 'col-10': 'col-12')}>
               <UserTable currentSort={sortBy} onSortItem={handlerSortItem} users={cropUsers} onDelete={handleDelete} onToggleBookmark={handlerBookmark}/>
             </div>
           </main>
+        </>
+            
         )
       }
       

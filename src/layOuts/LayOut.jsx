@@ -6,9 +6,7 @@ function LayOut() {
   return ( 
     <>
       <NavList/>
-
       <Outlet/>
-
       <h4>Footer</h4>
     </>
   );
