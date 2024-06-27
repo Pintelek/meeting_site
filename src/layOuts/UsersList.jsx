@@ -9,97 +9,135 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box';
 import UserTable from '../components/UserTable/UserTable';
 import _ from 'lodash';
-
+import InputText from '../components/Login/InputText';
 
 function UsersList() {
-
-
   const [usersAll, setUsersAll] = useState([]);
   const [filterUser, setFilterUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [professions , setProfessions] = useState();
+  const [professions, setProfessions] = useState();
   const [selectedProfession, setSelectedProfession] = useState();
-  const [sortBy, setSortBy] = useState({path:'name', order: 'asc'});
+  const [sortBy, setSortBy] = useState({ path: 'name', order: 'asc' });
+  const [searchValue, setSearchValue] = useState('');
 
   const pageSize = 8;
   const countUsers = filterUser.length;
 
   useEffect(() => {
-    API.professions.fetchAll()
-      .then(res => {
-        setProfessions(res);
-      });
-    API.users.fetchAll()
-      .then(res => {
-        setUsersAll(res);
-      });
-  },[]);
+    API.professions.fetchAll().then(res => {
+      setProfessions(res);
+    });
+    API.users.fetchAll().then(res => {
+      setUsersAll(res);
+    });
+  }, []);
 
-  
-
-  const handleDelete = (id) => {
-    setUsersAll(state => (state.filter(el => el._id != id)));
+  const handleDelete = id => {
+    setUsersAll(state => state.filter(el => el._id != id));
   };
-  
-  const handlerBookmark = (id) => {
-    setUsersAll(usersAll.map(el => {
-      if(el._id === id) {
-        el.bookmark? el.bookmark=false: el.bookmark=true;
-      }
-      return el;
-    })
+
+  const handlerBookmark = id => {
+    setUsersAll(
+      usersAll.map(el => {
+        if (el._id === id) {
+          el.bookmark ? (el.bookmark = false) : (el.bookmark = true);
+        }
+        return el;
+      })
     );
   };
 
-  const handlerChange = (page) => {
+  const handlerChange = page => {
     setCurrentPage(page);
   };
 
-  const handlerSelectProfession = (item) => {
-    setCurrentPage(1);
+  const handlerSelectProfession = item => {
     setSelectedProfession(item);
+    setSearchValue('');
   };
 
   const handlerReset = () => {
     setSelectedProfession(undefined);
   };
 
-  const handlerSortItem = (param) => {
+  const handlerSortItem = param => {
     setSortBy(param);
   };
 
+  const filterSearch = e => {
+    setSelectedProfession(undefined);
+    setSearchValue(e.target.value);
+  };
+
   useEffect(() => {
-    setFilterUser(selectedProfession?([...usersAll].filter(el => el.profession._id == selectedProfession._id)):usersAll);
-  },[selectedProfession, usersAll]);
+    setCurrentPage(1);
+  }, [searchValue, selectedProfession]);
+
+  useEffect(() => {
+    setFilterUser(
+      searchValue
+        ? [...usersAll].filter(el =>
+            new RegExp(`${searchValue}`).test(el.name.toLowerCase())
+          )
+        : selectedProfession
+        ? [...usersAll].filter(
+            el => el.profession._id == selectedProfession._id
+          )
+        : usersAll
+    );
+  }, [searchValue, selectedProfession, usersAll]);
 
   const sortedUsers = _.orderBy(filterUser, sortBy.path, sortBy.order);
-  const cropUsers = paginate(sortedUsers,currentPage, pageSize);
-  
+  const cropUsers = paginate(sortedUsers, currentPage, pageSize);
 
   return (
-    <div className='container'>
-      {
-        usersAll.length === 0? (
-          <Box sx={{ width: '100%' }}>
-            <LinearProgress />
-          </Box>): (<>
-          <SearchStatus data={filterUser}/>
-          <main className='row m-4'>
-            {professions? <GroupList onReset={handlerReset} onSelected={handlerSelectProfession} selectedItem={selectedProfession} items={professions} />: null}
-            <div className={'user-list ' + (professions? 'col-10': 'col-12')}>
-              <UserTable currentSort={sortBy} onSortItem={handlerSortItem} users={cropUsers} onDelete={handleDelete} onToggleBookmark={handlerBookmark}/>
+    <div className="container">
+      {usersAll.length === 0 ? (
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress />
+        </Box>
+      ) : (
+        <>
+          <SearchStatus data={filterUser} />
+          <main className="row m-4">
+            {professions ? (
+              <GroupList
+                onReset={handlerReset}
+                onSelected={handlerSelectProfession}
+                selectedItem={selectedProfession}
+                items={professions}
+              />
+            ) : null}
+            <div className={'user-list ' + (professions ? 'col-10' : 'col-12')}>
+              <div className="input-group mb-3">
+                <input
+                  className="form-control"
+                  type="text"
+                  value={searchValue}
+                  placeholder="search..."
+                  onInput={filterSearch}
+                />
+              </div>
+              <UserTable
+                currentSort={sortBy}
+                onSortItem={handlerSortItem}
+                users={cropUsers}
+                onDelete={handleDelete}
+                onToggleBookmark={handlerBookmark}
+              />
             </div>
           </main>
         </>
-            
-        )
-      }
-      
-      <MyPagination onChange={handlerChange} countItem={countUsers} currentPage={currentPage}  pageSize={pageSize}/>
+      )}
+
+      <MyPagination
+        onChange={handlerChange}
+        countItem={countUsers}
+        currentPage={currentPage}
+        pageSize={pageSize}
+      />
     </div>
   );
 }
-
-
 
 export default UsersList;
