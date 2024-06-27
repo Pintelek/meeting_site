@@ -17,10 +17,10 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    quotes: ["error", "single"],
-    "indent": ["error", 2],
-    "arrow-spacing": ["error", { "before": true, "after": true }],
-    semi: ["error", "always", { "omitLastInOneLineBlock": false}],
-    "react/prop-types": [0]
+    quotes: ['error', 'single'],
+    // indent: ['error', 2],
+    'arrow-spacing': ['error', { before: true, after: true }],
+    semi: ['error', 'always', { omitLastInOneLineBlock: false }],
+    'react/prop-types': [0],
   },
-}
+};

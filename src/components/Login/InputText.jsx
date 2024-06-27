@@ -1,30 +1,39 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-function InputText({name, type, label, state, onChange, error}) {
-
+function InputText({ name, type, label, state, onChange, error }) {
   const [isVisible, setIsVisible] = useState(false);
-
-  console.log(error);
 
   const handleClick = () => {
     setIsVisible(prev => !prev);
   };
-  return ( 
-    <div>
-      <label htmlFor={name}>{label}</label>
-      <input 
-        type = {(type === 'password')? isVisible? 'text': 'password' : type} 
-        onChange={onChange}  
-        id={name}
-        name={name} 
-        value={state.name} />
-      {(type === 'password')? 
-        <button 
-          type='button'
-          onClick={handleClick}
-        >{isVisible? 'скрыть': 'показать'}</button>: null}
-      {error[name] !== ''? <p>{error[name]}</p>: null}
+  return (
+    <div className="mb-3 input-group">
+      <label className="form-label" htmlFor={name}>
+        {label}
+      </label>
+      <div className="input-group .has-validation">
+        <input
+          type={isVisible ? 'text' : type}
+          onChange={onChange}
+          id={name}
+          name={name}
+          value={state.name}
+          className={'form-control' + (error[name] ? ' is-invalid' : '')}
+        />
+        {type === 'password' ? (
+          <button
+            className="btn btn-outline-secondary"
+            type="button"
+            onClick={handleClick}
+          >
+            <i className={'bi bi-eye' + (isVisible ? '-slash' : '')}></i>
+          </button>
+        ) : null}
+      </div>
+      {error[name] !== '' ? (
+        <div className="invalid-feedback">{error[name]}</div>
+      ) : null}
     </div>
   );
 }
@@ -34,11 +43,11 @@ InputText.propTypes = {
   type: PropTypes.string,
   label: PropTypes.string,
   state: PropTypes.object.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };
 
 InputText.defaultProps = {
-  type: 'text'
+  type: 'text',
 };
 
 export default InputText;
