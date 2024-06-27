@@ -7,12 +7,13 @@ function InputText({ name, type, label, state, onChange, error }) {
   const handleClick = () => {
     setIsVisible(prev => !prev);
   };
+  console.log(error[name]);
   return (
-    <div className="mb-3 input-group">
+    <div className="mb-3">
       <label className="form-label" htmlFor={name}>
         {label}
       </label>
-      <div className="input-group .has-validation">
+      <div className="input-group has-validation">
         <input
           type={isVisible ? 'text' : type}
           onChange={onChange}
@@ -30,10 +31,10 @@ function InputText({ name, type, label, state, onChange, error }) {
             <i className={'bi bi-eye' + (isVisible ? '-slash' : '')}></i>
           </button>
         ) : null}
+        {error[name] !== '' ? (
+          <div className="invalid-feedback">{error[name]}</div>
+        ) : null}
       </div>
-      {error[name] !== '' ? (
-        <div className="invalid-feedback">{error[name]}</div>
-      ) : null}
     </div>
   );
 }
