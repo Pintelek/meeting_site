@@ -4,29 +4,22 @@ import 'bootstrap-icons/font/bootstrap-icons.min.css';
 
 import { Routes, Route } from 'react-router-dom';
 
-import UsersList from './layOuts/UsersList';
 import Main from './layOuts/Main';
-import LoginPage from './layOuts/LoginPage';
+import Login from './layOuts/Login';
 import LayOut from './layOuts/LayOut';
-import User from './components/User';
+
+import Users from './layOuts/Users';
 
 function App() {
-
-
   return (
     <>
-      
       <Routes>
-        <Route path='/' element={<LayOut/>}>
-          <Route index element={<Main/>}/>
-          <Route path='login' element={<LoginPage/>}/>
-          <Route path='users' element={<UsersList/>}/>
-          <Route path='users/:id' element={<User/>}/>
+        <Route path="/" element={<LayOut />}>
+          <Route index element={<Main />} />
+          <Route path="login/:type?" element={<Login />} />
+          <Route path="users/:id?" element={<Users />} />
         </Route>
       </Routes>
-      
-
-      
     </>
   );
 }

@@ -1,12 +1,11 @@
-import {Outlet} from 'react-router-dom';
-import NavList from '../components/NavList/NavList';
-
+import { Outlet } from 'react-router-dom';
+import NavList from '../components/UI/NavList';
 
 function LayOut() {
-  return ( 
+  return (
     <>
-      <NavList/>
-      <Outlet/>
+      <NavList />
+      <Outlet />
       <h4>Footer</h4>
     </>
   );

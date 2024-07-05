@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-function InputText({ name, type, label, state, onChange, error }) {
+function TextField({ name, type, label, state, onChange, error }) {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleClick = () => {
     setIsVisible(prev => !prev);
   };
-  console.log(error[name]);
   return (
     <div className="mb-3">
       <label className="form-label" htmlFor={name}>
@@ -23,23 +22,17 @@ function InputText({ name, type, label, state, onChange, error }) {
           className={'form-control' + (error[name] ? ' is-invalid' : '')}
         />
         {type === 'password' ? (
-          <button
-            className="btn btn-outline-secondary"
-            type="button"
-            onClick={handleClick}
-          >
+          <button className="btn btn-outline-secondary" type="button" onClick={handleClick}>
             <i className={'bi bi-eye' + (isVisible ? '-slash' : '')}></i>
           </button>
         ) : null}
-        {error[name] !== '' ? (
-          <div className="invalid-feedback">{error[name]}</div>
-        ) : null}
+        {error[name] !== '' ? <div className="invalid-feedback">{error[name]}</div> : null}
       </div>
     </div>
   );
 }
 
-InputText.propTypes = {
+TextField.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
   label: PropTypes.string,
@@ -47,8 +40,8 @@ InputText.propTypes = {
   onChange: PropTypes.func.isRequired,
 };
 
-InputText.defaultProps = {
+TextField.defaultProps = {
   type: 'text',
 };
 
-export default InputText;
+export default TextField;

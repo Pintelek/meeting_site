@@ -1,17 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import API from '../API';
+import API from '../../../API';
 import { useEffect, useState } from 'react';
-import SearchStatus from '../components/SearchStatus/SearchStatus';
-import MyPagination from '../components/Pagination/Pagination';
-import paginate from '../utils/paginate';
-import GroupList from '../components/GroupList/GroupList';
+import SearchStatus from '../../UI/SearchStatus';
+import MyPagination from '../../common/MyPagination';
+import paginate from '../../../utils/paginate';
+import GroupList from '../../common/GroupList';
 import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box';
-import UserTable from '../components/UserTable/UserTable';
+import UserTable from '../../UI/UserTable';
 import _ from 'lodash';
-import InputText from '../components/Login/InputText';
 
-function UsersList() {
+function UsersListPage() {
   const [usersAll, setUsersAll] = useState([]);
   const [filterUser, setFilterUser] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,7 +63,7 @@ function UsersList() {
     setSortBy(param);
   };
 
-  const filterSearch = e => {
+  const handlerFilterSearch = e => {
     setSelectedProfession(undefined);
     setSearchValue(e.target.value);
   };
@@ -76,13 +75,9 @@ function UsersList() {
   useEffect(() => {
     setFilterUser(
       searchValue
-        ? [...usersAll].filter(el =>
-            new RegExp(`${searchValue}`).test(el.name.toLowerCase())
-          )
+        ? [...usersAll].filter(el => new RegExp(`${searchValue}`).test(el.name.toLowerCase()))
         : selectedProfession
-        ? [...usersAll].filter(
-            el => el.profession._id == selectedProfession._id
-          )
+        ? [...usersAll].filter(el => el.profession._id == selectedProfession._id)
         : usersAll
     );
   }, [searchValue, selectedProfession, usersAll]);
@@ -115,7 +110,7 @@ function UsersList() {
                   type="text"
                   value={searchValue}
                   placeholder="search..."
-                  onInput={filterSearch}
+                  onInput={handlerFilterSearch}
                 />
               </div>
               <UserTable
@@ -130,14 +125,9 @@ function UsersList() {
         </>
       )}
 
-      <MyPagination
-        onChange={handlerChange}
-        countItem={countUsers}
-        currentPage={currentPage}
-        pageSize={pageSize}
-      />
+      <MyPagination onChange={handlerChange} countItem={countUsers} currentPage={currentPage} pageSize={pageSize} />
     </div>
   );
 }
 
-export default UsersList;
+export default UsersListPage;
