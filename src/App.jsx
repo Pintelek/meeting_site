@@ -17,7 +17,7 @@ function App() {
         <Route path="/" element={<LayOut />}>
           <Route index element={<Main />} />
           <Route path="login/:type?" element={<Login />} />
-          <Route path="users/:id?" element={<Users />} />
+          <Route path="users/:userId?/:edit?" element={<Users />} />
         </Route>
       </Routes>
     </>

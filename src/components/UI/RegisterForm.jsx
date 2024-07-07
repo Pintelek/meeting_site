@@ -5,15 +5,28 @@ import SelectField from '../common/form/SelectField';
 import API from '../../API';
 import PropTypes from 'prop-types';
 import RadioField from '../common/form/RadioField';
+import MultiSelectField from '../common/form/MultiSelectField';
+import CheckBoxField from '../common/form/CheckBoxField';
 
 function RegisterForm({ onToggle }) {
-  const [data, setData] = useState({ email: '', password: '', professions: '', gender: '', gender: 'male' });
+  const [data, setData] = useState({
+    email: '',
+    password: '',
+    professions: '',
+    sex: 'male',
+    qualities: [],
+    agreement: false,
+  });
   const [errors, setErrors] = useState({});
   const [professions, setProfessions] = useState();
+  const [qualities, setQualities] = useState();
 
   useEffect(() => {
     API.professions.fetchAll().then(res => {
       setProfessions(res);
+    });
+    API.qualities.then(res => {
+      setQualities(res);
     });
   }, []);
 
@@ -42,6 +55,11 @@ function RegisterForm({ onToggle }) {
         message: 'Выбор профессии обязателен',
       },
     },
+    agreement: {
+      isRequired: {
+        message: 'Треуется дать согласие',
+      },
+    },
   };
 
   const validate = () => {
@@ -54,8 +72,8 @@ function RegisterForm({ onToggle }) {
     validate();
   }, [data]);
 
-  const handleChange = e => {
-    setData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = target => {
+    setData(prev => ({ ...prev, [target.name]: target.value }));
   };
 
   const handleSubmit = e => {
@@ -89,11 +107,23 @@ function RegisterForm({ onToggle }) {
             { name: 'Male', value: 'male' },
             { name: 'Female', value: 'female' },
           ]}
-          name="gender"
+          name="sex"
           label={'Ваш пол'}
-          value={data.gender}
+          value={data.sex}
           onChange={handleChange}
         />
+
+        <MultiSelectField
+          onChange={handleChange}
+          qualities={qualities}
+          defaultValue={data.qualities}
+          label={'Выберете ваши качества'}
+          name={'qualities'}
+        />
+
+        <CheckBoxField value={data.agreement} name={'agreement'} onChange={handleChange} errors={errors}>
+          Я принимаю <a>пользовательское соглашение</a>.
+        </CheckBoxField>
 
         <button className="btn w-100 mx-auto btn-primary" type="submit" disabled={Object.keys(errors).length !== 0}>
           Отправить

@@ -4,6 +4,10 @@ import { useState } from 'react';
 function TextField({ name, type, label, state, onChange, error }) {
   const [isVisible, setIsVisible] = useState(false);
 
+  const handleChange = ({ target }) => {
+    onChange({ name: target.name, value: target.value });
+  };
+
   const handleClick = () => {
     setIsVisible(prev => !prev);
   };
@@ -15,10 +19,10 @@ function TextField({ name, type, label, state, onChange, error }) {
       <div className="input-group has-validation">
         <input
           type={isVisible ? 'text' : type}
-          onChange={onChange}
+          onChange={handleChange}
           id={name}
           name={name}
-          value={state.name}
+          value={state[name]}
           className={'form-control' + (error[name] ? ' is-invalid' : '')}
         />
         {type === 'password' ? (
@@ -38,10 +42,12 @@ TextField.propTypes = {
   label: PropTypes.string,
   state: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
+  error: PropTypes.object,
 };
 
 TextField.defaultProps = {
   type: 'text',
+  error: {},
 };
 
 export default TextField;

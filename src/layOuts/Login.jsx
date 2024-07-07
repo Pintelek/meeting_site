@@ -1,13 +1,21 @@
 import { useEffect, useState } from 'react';
 import LoginForm from '../components/UI/LoginForm';
 import RegisterForm from '../components/UI/RegisterForm';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 function LoginPage() {
   const { type } = useParams();
   const [formType, setFormType] = useState(type === 'register' ? type : 'login');
 
+  const history = useNavigate();
+  const location = useLocation();
+
+  console.log(location.hash);
   const toggleTypeForm = () => {
+    if (formType === 'login') {
+      history(`${location.pathname}/register`);
+    } else history('/login');
+
     setFormType(prev => (prev === 'register' ? 'login' : 'register'));
   };
   return (

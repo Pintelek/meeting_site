@@ -3,7 +3,11 @@ export function validator(data, config) {
   function validate(method, data, config) {
     switch (method) {
       case 'isRequired':
-        if (data.trim() === '') return config.message;
+        {
+          if (typeof data === 'boolean') {
+            return data ? false : config.message;
+          } else if (data.trim() === '') return config.message;
+        }
         break;
       case 'minSymbol':
         if (data.trim().length < 8) return config.message;
@@ -12,12 +16,7 @@ export function validator(data, config) {
         if (!/^\S+@\S+\.[a-z]+$/g.test(data.trim())) return config.message;
         break;
       case 'isPassword':
-        if (
-          !/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}/g.test(
-            data.trim()
-          )
-        )
-          return config.message;
+        if (!/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}/g.test(data.trim())) return config.message;
         break;
       default:
         break;
@@ -25,11 +24,7 @@ export function validator(data, config) {
   }
   for (let fieldName in data) {
     for (let validateMethod in config[fieldName]) {
-      const error = validate(
-        validateMethod,
-        data[fieldName],
-        config[fieldName][validateMethod]
-      );
+      const error = validate(validateMethod, data[fieldName], config[fieldName][validateMethod]);
       if (!errors[fieldName] && error) {
         errors[fieldName] = error;
       }
