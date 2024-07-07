@@ -6,6 +6,8 @@ export function validator(data, config) {
         {
           if (typeof data === 'boolean') {
             return data ? false : config.message;
+          } else if (typeof data === 'object') {
+            return data._id ? false : config.message;
           } else if (data.trim() === '') return config.message;
         }
         break;

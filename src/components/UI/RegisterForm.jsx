@@ -12,7 +12,7 @@ function RegisterForm({ onToggle }) {
   const [data, setData] = useState({
     email: '',
     password: '',
-    professions: '',
+    profession: '',
     sex: 'male',
     qualities: [],
     agreement: false,
@@ -82,6 +82,7 @@ function RegisterForm({ onToggle }) {
     if (isValid) return;
   };
 
+  console.log(data);
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -96,10 +97,10 @@ function RegisterForm({ onToggle }) {
         />
         <SelectField
           data={professions}
-          name={'professions'}
+          name={'profession'}
           label={'Ваша профессия'}
           onChange={handleChange}
-          value={data.professions}
+          value={data.profession._id}
           error={errors}
         />
         <RadioField

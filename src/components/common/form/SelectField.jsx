@@ -11,6 +11,7 @@ function SelectField({ name, data, label, onChange, value, error }) {
   //   ? data
   //   : Object.keys(data).map(item => ({ _id: data[item]._id, name: data[item].name }));
 
+  console.log(value);
   return (
     <>
       <div className="mb-4">
