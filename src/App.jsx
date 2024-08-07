@@ -4,7 +4,6 @@ import 'bootstrap-icons/font/bootstrap-icons.min.css';
 
 import { Routes, Route } from 'react-router-dom';
 
-import Main from './layOuts/Main';
 import Login from './layOuts/Login';
 import LayOut from './layOuts/LayOut';
 
@@ -15,7 +14,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<LayOut />}>
-          <Route index element={<Main />} />
+          <Route index element={<Users />} />
           <Route path="login/:type?" element={<Login />} />
           <Route path="users/:userId?/:edit?" element={<Users />} />
         </Route>
