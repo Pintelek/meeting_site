@@ -1,8 +1,39 @@
-# React + Vite
+# Meeting Site
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## [Портал для поиска новых знакомств](https://meeting-pintelek.netlify.app/)
 
-Currently, two official plugins are available:
+**Технологии**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- JavaScript
+- React
+- Router-dom
+
+## Установка
+
+1. **Склонируйте репозиторий на свой компьютер:**
+
+   ```bash
+   git clone https://github.com/Pintelek/meeting_site
+
+   ```
+
+2. **Перейдите в директорию проекта:**
+
+   ```bash
+   cd meeting_site
+
+   ```
+
+3. **Установите необходимые зависимости**
+
+   ```bash
+   npm install
+   ```
+
+**Запуск**
+
+В терминале дериктории meeting_site можете запустить приложение командой:
+
+```bash
+npm run dev
+```
